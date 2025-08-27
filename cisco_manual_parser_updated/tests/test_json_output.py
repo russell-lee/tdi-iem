@@ -31,7 +31,8 @@ def summarize_data() -> str:
     ]
     return "\n".join(lines)
 
-
+codex/add-tests-for-explanation-fields
+main
 def test_json_structure_and_types():
     data = load_data()
     assert isinstance(data, list) and data
