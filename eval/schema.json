@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "Raw Error Text",
+    "Facility",
+    "Error Code",
+    "Error Message",
+    "Explanation",
+    "Recommended Action",
+    "Severity",
+    "Page"
+  ],
+  "properties": {
+    "Raw Error Text": {"type": "string"},
+    "Facility": {"type": "string"},
+    "Error Code": {"type": "string"},
+    "Error Message": {"type": "string"},
+    "Explanation": {"type": "string"},
+    "Recommended Action": {"type": "string"},
+    "Severity": {"type": "integer", "minimum": 0, "maximum": 7},
+    "Page": {"type": "integer", "minimum": 1}
+  },
+  "additionalProperties": false
+}

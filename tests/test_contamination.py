@@ -1,4 +1,6 @@
 import re
+import re
+
 from test_json_output import load_data
 
 HEADER_RE = re.compile(r"%[A-Z]+-\d-")

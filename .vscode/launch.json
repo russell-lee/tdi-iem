@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CLI extract",
+      "type": "python",
+      "request": "launch",
+      "module": "cli.extract",
+      "args": ["data/raw/manual.pdf", "--out", "data/interim/pages.json"]
+    }
+  ]
+}

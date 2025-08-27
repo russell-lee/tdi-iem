@@ -5,11 +5,11 @@ from collections import Counter
 from pathlib import Path
 
 
-# Ensure package root on path
+# Ensure src/ on path and locate golden data
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.append(str(ROOT))
+sys.path.append(str(ROOT / "src"))
 
-DATA_FILE = ROOT / "out_small.json"
+DATA_FILE = Path(__file__).resolve().parent / "golden" / "out_small.json"
 
 
 def load_data():

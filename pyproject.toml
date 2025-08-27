@@ -3,22 +3,28 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cisco-manual-parser"
-version = "0.2.0"
-description = "Hybrid PDF→JSON parser for Cisco-style error manuals"
+name = "error-manual-parser"
+version = "0.3.0"
+description = "Pipeline for parsing error message manuals into JSON/NDJSON"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
   "pdfplumber>=0.11.0",
   "jsonschema>=4.0.0",
+  "pyyaml>=6.0"
 ]
 
 [project.scripts]
-cisco-parse = "cisco_parser.parse_manual:main"
+iem-extract = "cli.extract:main"
+iem-parse = "cli.parse:main"
+iem-repair = "cli.repair:main"
+iem-emit = "cli.emit:main"
+iem-eval = "cli.eval:main"
 
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]
+pythonpath = ["src"]
 
 [tool.black]
 line-length = 100
