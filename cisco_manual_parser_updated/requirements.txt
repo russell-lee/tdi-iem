@@ -1,9 +1,0 @@
-pdfplumber>=0.11.0
-jsonschema>=4.0.0
-pytest>=7.0.0
-# --- Scikit-learn stack (adds ML utilities without a second venv) ---
-scikit-learn>=1.4.0
-numpy>=1.23.0
-scipy>=1.10.0
-joblib>=1.2.0
-threadpoolctl>=3.1.0

@@ -1,0 +1,33 @@
+header_start: '^\s*%'
+
+entry_header: |
+  ^\s*%
+  (?P<facility>[A-Z0-9_]+)
+  (?:-(?P<subfacility>[A-Z0-9_]+))?
+  -
+  (?P<severity>[0-7])
+  -
+  (?P<mnemonic>[A-Z0-9_]+)
+  \s*:\s*
+  (?P<message>.*)
+  $
+
+entry_header_prefix: |
+  ^\s*%
+  (?P<facility>[A-Z0-9_]+)
+  (?:-(?P<subfacility>[A-Z0-9_]+))?
+  -
+  (?P<severity>[0-7])
+  -
+  (?P<mnemonic>[A-Z0-9_]+)
+  \s*:\s*$
+
+label_variants:
+  Explanation:
+    - Explanation
+  Recommended Action:
+    - Recommended Action
+
+trim:
+  top: 0.07
+  bottom: 0.93
