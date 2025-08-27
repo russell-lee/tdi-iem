@@ -1,5 +1,8 @@
 import json
 import sys
+
+from collections import Counter
+ main
 from pathlib import Path
 
 # Ensure package root on path
@@ -14,6 +17,24 @@ def load_data():
         return json.load(f)
 
 
+
+def summarize_data() -> str:
+    """Return a human-readable summary of the JSON dataset."""
+    data = load_data()
+    facilities = sorted({obj["Facility"] for obj in data})
+    severity_counts = Counter(obj["Severity"] for obj in data)
+    lines = [
+        f"Total entries: {len(data)}",
+        f"Facilities: {', '.join(facilities)}",
+        "Severity counts: "
+        + ", ".join(
+            f"{sev}:{count}" for sev, count in sorted(severity_counts.items())
+        ),
+    ]
+    return "\n".join(lines)
+
+
+main
 def test_json_structure_and_types():
     data = load_data()
     assert isinstance(data, list) and data
@@ -48,3 +69,15 @@ def test_first_entry_sample_values():
     assert first["Severity"] == 2
     assert first["Error Code"] == "AAAMULTILINKERROR"
     assert first["Explanation"].startswith("AAA internal error")
+codex/inspect-codebase-for-overview-mb80hh
+
+
+def test_summary_contains_key_fields():
+    summary = summarize_data()
+    assert "Total entries" in summary
+    assert "Facilities" in summary
+
+
+if __name__ == "__main__":
+    print(summarize_data())
+main
