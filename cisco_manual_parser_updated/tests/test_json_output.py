@@ -1,7 +1,9 @@
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
+
 
 # Ensure package root on path
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +20,7 @@ def load_data():
 def summarize_data() -> str:
     """Return a human-readable summary of the JSON dataset."""
     data = load_data()
+
 
     facilities = Counter(obj["Facility"] for obj in data)
     severity_counts = Counter(obj["Severity"] for obj in data)
@@ -45,16 +48,19 @@ def summarize_data() -> str:
     lines = [
         f"Total entries: {len(data)}",
         f"Facilities: {', '.join(sorted(facilities))}",
+
         "Severity counts: "
         + ", ".join(
             f"{sev}:{count}" for sev, count in sorted(severity_counts.items())
         ),
+
         f"Duplicate entries: {duplicate_count}",
         f"Null/empty fields: {null_field_count}",
         f"Top facilities: {top_facilities}",
         f"Top severities: {top_severities}",
     ]
     return "\n".join(lines)
+
 
 
 def test_json_structure_and_types():
@@ -77,6 +83,14 @@ def test_json_structure_and_types():
         assert isinstance(obj["Page"], int) and obj["Page"] > 0
 
 
+
+def test_keys_are_str_and_non_empty():
+    data = load_data()
+    for obj in data:
+        for key in obj.keys():
+            assert isinstance(key, str)
+            assert key.strip()
+
 def test_raw_text_matches_fields():
     data = load_data()
     for obj in data:
@@ -91,6 +105,7 @@ def test_first_entry_sample_values():
     assert first["Severity"] == 2
     assert first["Error Code"] == "AAAMULTILINKERROR"
     assert first["Explanation"].startswith("AAA internal error")
+
 
 
 def test_no_duplicate_entries():
@@ -124,5 +139,7 @@ def test_summary_contains_quality_metrics():
     assert "3(290)" in summary
 
 
+
 if __name__ == "__main__":
     print(summarize_data())
+
