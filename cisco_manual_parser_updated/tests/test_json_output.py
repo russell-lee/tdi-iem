@@ -30,8 +30,8 @@ def summarize_data() -> str:
         ),
     ]
     return "\n".join(lines)
-
-
+codex/add-tests-for-load_data-object-keys
+main
 def test_json_structure_and_types():
     data = load_data()
     assert isinstance(data, list) and data
@@ -84,4 +84,5 @@ def test_summary_contains_key_fields():
 
 if __name__ == "__main__":
     print(summarize_data())
-
+codex/add-tests-for-load_data-object-keys
+main
