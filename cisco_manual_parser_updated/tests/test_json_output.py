@@ -1,8 +1,7 @@
 import json
+import re
 import sys
-
 from collections import Counter
- main
 from pathlib import Path
 
 # Ensure package root on path
@@ -15,7 +14,6 @@ DATA_FILE = ROOT / "out_small.json"
 def load_data():
     with DATA_FILE.open(encoding="utf-8") as f:
         return json.load(f)
-
 
 
 def summarize_data() -> str:
@@ -34,7 +32,6 @@ def summarize_data() -> str:
     return "\n".join(lines)
 
 
-main
 def test_json_structure_and_types():
     data = load_data()
     assert isinstance(data, list) and data
@@ -69,7 +66,6 @@ def test_first_entry_sample_values():
     assert first["Severity"] == 2
     assert first["Error Code"] == "AAAMULTILINKERROR"
     assert first["Explanation"].startswith("AAA internal error")
-codex/inspect-codebase-for-overview-mb80hh
 
 
 def test_summary_contains_key_fields():
@@ -78,6 +74,17 @@ def test_summary_contains_key_fields():
     assert "Facilities" in summary
 
 
+def test_text_fields_trimmed_and_no_soft_hyphen():
+    data = load_data()
+    soft_hyphen_re = re.compile("\u00ad")
+    fields = ["Explanation", "Error Message", "Recommended Action"]
+    for obj in data:
+        for field in fields:
+            value = obj.get(field)
+            if isinstance(value, str):
+                assert value == value.strip()
+                assert not soft_hyphen_re.search(value)
+
+
 if __name__ == "__main__":
     print(summarize_data())
-main
