@@ -1,4 +1,10 @@
 import re
+import sys
+from pathlib import Path
+
+# ensure package root on path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
 from cisco_parser.parse_manual import ENTRY_HEADER_RE
 
 def test_header_regex_basic():
