@@ -4,6 +4,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+
 # Ensure package root on path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT))
@@ -30,6 +31,10 @@ def summarize_data() -> str:
         ),
     ]
     return "\n".join(lines)
+codex/add-tests-for-duplicate-error-detection
+
+codex/add-tests-for-load_data-object-keys
+main
 
 codex/add-tests-for-explanation-fields
 main
@@ -51,6 +56,14 @@ def test_json_structure_and_types():
         assert isinstance(obj["Severity"], int)
         assert 0 <= obj["Severity"] <= 7
         assert isinstance(obj["Page"], int) and obj["Page"] > 0
+
+
+def test_keys_are_str_and_non_empty():
+    data = load_data()
+    for obj in data:
+        for key in obj.keys():
+            assert isinstance(key, str)
+            assert key.strip()
 
 
 def test_raw_text_matches_fields():
@@ -75,6 +88,7 @@ def test_summary_contains_key_fields():
     assert "Facilities" in summary
 
 
+codex/add-tests-for-explanation-fields
 def test_text_fields_trimmed_and_no_soft_hyphen():
     data = load_data()
     soft_hyphen_re = re.compile("\u00ad")
@@ -86,6 +100,27 @@ def test_text_fields_trimmed_and_no_soft_hyphen():
                 assert value == value.strip()
                 assert not soft_hyphen_re.search(value)
 
+def test_no_duplicate_facility_code_severity():
+    """Ensure each (Facility, Error Code, Severity) combination is unique."""
+    data = load_data()
+    unique_keys = {
+        (obj["Facility"], obj["Error Code"], obj["Severity"]) for obj in data
+    }
+    assert len(unique_keys) == len(data)
+
+
+def test_no_duplicate_raw_error_text():
+    """Optionally ensure Raw Error Text values are unique."""
+    data = load_data()
+    unique_texts = {obj["Raw Error Text"] for obj in data}
+    assert len(unique_texts) == len(data)
+main
+
 
 if __name__ == "__main__":
     print(summarize_data())
+codex/add-tests-for-duplicate-error-detection
+
+codex/add-tests-for-load_data-object-keys
+main
+
