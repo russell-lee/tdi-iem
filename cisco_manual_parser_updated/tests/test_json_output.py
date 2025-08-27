@@ -1,9 +1,8 @@
 import json
 import sys
-
 from collections import Counter
- main
 from pathlib import Path
+
 
 # Ensure package root on path
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,7 +14,6 @@ DATA_FILE = ROOT / "out_small.json"
 def load_data():
     with DATA_FILE.open(encoding="utf-8") as f:
         return json.load(f)
-
 
 
 def summarize_data() -> str:
@@ -34,7 +32,6 @@ def summarize_data() -> str:
     return "\n".join(lines)
 
 
-main
 def test_json_structure_and_types():
     data = load_data()
     assert isinstance(data, list) and data
@@ -55,6 +52,14 @@ def test_json_structure_and_types():
         assert isinstance(obj["Page"], int) and obj["Page"] > 0
 
 
+def test_keys_are_str_and_non_empty():
+    data = load_data()
+    for obj in data:
+        for key in obj.keys():
+            assert isinstance(key, str)
+            assert key.strip()
+
+
 def test_raw_text_matches_fields():
     data = load_data()
     for obj in data:
@@ -69,7 +74,6 @@ def test_first_entry_sample_values():
     assert first["Severity"] == 2
     assert first["Error Code"] == "AAAMULTILINKERROR"
     assert first["Explanation"].startswith("AAA internal error")
-codex/inspect-codebase-for-overview-mb80hh
 
 
 def test_summary_contains_key_fields():
@@ -80,4 +84,4 @@ def test_summary_contains_key_fields():
 
 if __name__ == "__main__":
     print(summarize_data())
-main
+
