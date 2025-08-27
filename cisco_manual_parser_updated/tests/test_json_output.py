@@ -1,8 +1,6 @@
 import json
 import sys
-
 from collections import Counter
- main
 from pathlib import Path
 
 # Ensure package root on path
@@ -34,7 +32,6 @@ def summarize_data() -> str:
     return "\n".join(lines)
 
 
-main
 def test_json_structure_and_types():
     data = load_data()
     assert isinstance(data, list) and data
@@ -69,7 +66,6 @@ def test_first_entry_sample_values():
     assert first["Severity"] == 2
     assert first["Error Code"] == "AAAMULTILINKERROR"
     assert first["Explanation"].startswith("AAA internal error")
-codex/inspect-codebase-for-overview-mb80hh
 
 
 def test_summary_contains_key_fields():
@@ -78,6 +74,21 @@ def test_summary_contains_key_fields():
     assert "Facilities" in summary
 
 
+def test_no_duplicate_facility_code_severity():
+    """Ensure each (Facility, Error Code, Severity) combination is unique."""
+    data = load_data()
+    unique_keys = {
+        (obj["Facility"], obj["Error Code"], obj["Severity"]) for obj in data
+    }
+    assert len(unique_keys) == len(data)
+
+
+def test_no_duplicate_raw_error_text():
+    """Optionally ensure Raw Error Text values are unique."""
+    data = load_data()
+    unique_texts = {obj["Raw Error Text"] for obj in data}
+    assert len(unique_texts) == len(data)
+
+
 if __name__ == "__main__":
     print(summarize_data())
-main
