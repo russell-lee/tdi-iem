@@ -1,4 +1,5 @@
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -35,6 +36,8 @@ codex/add-tests-for-duplicate-error-detection
 codex/add-tests-for-load_data-object-keys
 main
 
+codex/add-tests-for-explanation-fields
+main
 def test_json_structure_and_types():
     data = load_data()
     assert isinstance(data, list) and data
@@ -85,6 +88,18 @@ def test_summary_contains_key_fields():
     assert "Facilities" in summary
 
 
+codex/add-tests-for-explanation-fields
+def test_text_fields_trimmed_and_no_soft_hyphen():
+    data = load_data()
+    soft_hyphen_re = re.compile("\u00ad")
+    fields = ["Explanation", "Error Message", "Recommended Action"]
+    for obj in data:
+        for field in fields:
+            value = obj.get(field)
+            if isinstance(value, str):
+                assert value == value.strip()
+                assert not soft_hyphen_re.search(value)
+
 def test_no_duplicate_facility_code_severity():
     """Ensure each (Facility, Error Code, Severity) combination is unique."""
     data = load_data()
@@ -99,6 +114,7 @@ def test_no_duplicate_raw_error_text():
     data = load_data()
     unique_texts = {obj["Raw Error Text"] for obj in data}
     assert len(unique_texts) == len(data)
+main
 
 
 if __name__ == "__main__":
