@@ -27,3 +27,13 @@ python -m cli.eval    data/processed/out.ndjson --schema eval/schema.json --outd
 
 A `Makefile` exposes common targets (`make build`, `make test`, etc.) and the
 `scripts/run.sh` wrapper runs the full pipeline for convenience.
+
+## Extract only
+
+To run just the first stage that converts a PDF into a JSON list of pages:
+
+```bash
+scripts/extract.sh path/to/manual.pdf [path/to/output.json]
+```
+
+The script defaults to `data/raw/manual.pdf` and writes to `data/interim/pages.json`.
